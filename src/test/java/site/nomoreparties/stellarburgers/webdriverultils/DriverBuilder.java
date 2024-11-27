@@ -4,15 +4,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static site.nomoreparties.stellarburgers.webdriverultils.Browser.CHROME;
-import static site.nomoreparties.stellarburgers.webdriverultils.Browser.YANDEX_BROWSER;
-
 public class DriverBuilder {
-    public static WebDriver getDriver(Browser browser) {
-        if (browser.equals(YANDEX_BROWSER)) {
-            return createYandexDriver();
-        } else {
+
+    // YANDEX_BROWSER_PATH - переменная пути окружения к яндекс браузеру
+    public static WebDriver createDriver() {
+        String browser = System.getProperty("browser");
+        if (browser == null) {
             return createChromeDriver();
+        }
+
+        switch (browser) {
+            case "yandex":
+                return createYandexDriver();
+            default:
+                return createChromeDriver();
         }
     }
 
@@ -26,7 +31,7 @@ public class DriverBuilder {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/yandexbrowserdriver.exe");
         ChromeOptions options = new ChromeOptions()
                 .addArguments("start-maximized")
-                .setBinary("C:\\Users\\zxcpc2\\AppData\\Local\\Yandex\\YandexBrowser\\Application\\browser.exe"); // Путь к яндекс браузеру
+                .setBinary("YANDEX_BROWSER_PATH"); // Путь к яндекс браузеру
         return new ChromeDriver(options);
     }
 }
