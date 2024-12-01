@@ -31,7 +31,7 @@ public class DriverBuilder {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/yandexbrowserdriver.exe");
         ChromeOptions options = new ChromeOptions()
                 .addArguments("start-maximized")
-                .setBinary("YANDEX_BROWSER_PATH"); // Путь к яндекс браузеру
+                .setBinary(System.getenv("YANDEX_BROWSER_PATH")); // Путь к яндекс браузеру
         return new ChromeDriver(options);
     }
 }
